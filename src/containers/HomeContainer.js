@@ -4,7 +4,6 @@ import {
   Text,
   ScrollView,
   Image,
-  StatusBar,
   ImageBackground,
   StyleSheet
 } from 'react-native'
@@ -16,13 +15,16 @@ import {
   Left,
   Right,
   Body,
-  Button
+  Button,
+  Spinner
 } from 'native-base'
 import colors from '../styles/colors'
 import RoundButton from '../components/buttons/RoundButton'
 import Swiper from 'react-native-swiper'
 import Notice from '../components/Home/Notice'
 import LotteryItem from '../components/Home/LotteryItem'
+
+import {User} from '../api'
 
 import {lotteryList} from '../data/lottery'
 
@@ -33,15 +35,33 @@ class HomeContainer extends Component {
       <Icon name="ios-home-outline" style={{ color: tintColor }} />
     )
   }
-  componentWillMount () {
-    StatusBar.setBarStyle({color: colors.WHITE})
+  state = {
+    loading: false
   }
   _renderList = () => {
     return lotteryList.map((item, index) => (
       <LotteryItem key={index} {...item} />
     ))
   }
+  _loginPress = async (type) => {
+    try {
+      if (type === 'guest') {
+        console.log('type guest')
+        const data = await fetch('http://jsonplaceholder.typicode.com/posts')
+        alert(JSON.stringify(data))
+      }
+    } catch (error) {
+      throw error
+    }
+  }
   render() {
+    if (this.state.loading) {
+      return (
+        <Container style={styles.container}>
+          <Spinner />
+        </Container>
+      )
+    }
     return (
       <Container style={styles.container}>
         <Header style={styles.header}>
@@ -51,8 +71,8 @@ class HomeContainer extends Component {
             />
           </Left>
           <Right style={styles.headerRight}>
-            <RoundButton text="登录" />
-            <RoundButton text="注册" />
+            <RoundButton text="试玩" style={{marginRight: 8}} onPress={() => this._loginPress('guest')} />
+            <RoundButton text="登录" onPress={() => this._loginPress('login')} />
           </Right>
         </Header>
         <ScrollView style={styles.scrollView}>
@@ -84,9 +104,6 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.PURPLE_DARK
-  },
-  headerRight: {
-    justifyContent: 'space-around'
   },
   headerBgImage: {
     width: 230/2,

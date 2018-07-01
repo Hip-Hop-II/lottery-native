@@ -16,7 +16,7 @@ const Notice = ({message}) => (
     <View style={styles.wrapperImage}>
       <ImageBackground source={require('../../images/home/notiy.png')} style={styles.image}/>
     </View>
-    <Text numberOfLines={10}>是大结局时间倒计时倒计时倒计时多久</Text>
+    <Text>是大结局时间倒计时倒计时倒计时多久</Text>
     <Button transparent>
       <Icon name="ios-arrow-forward" style={{color: colors.LIGHT_BLACK}} />
     </Button>

@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   iconWrapper: {
     position: 'absolute',
     left: 5,
-    bottom: 8
+    bottom: '50%',
+    marginBottom: -6
   },
   input: {
     borderBottomWidth: .5,

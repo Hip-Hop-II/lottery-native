@@ -1,7 +1,7 @@
 import {NavigationActions} from 'react-navigation'
 import {RootNavigator} from '../../navigators/AppNavigator'
 
-const firstAction = RootNavigator.router.getActionForPathAndParams('Login')
+const firstAction = RootNavigator.router.getActionForPathAndParams('Main')
 const tempNavState = RootNavigator.router.getStateForAction(firstAction)
 
 const initNavState = RootNavigator.router.getStateForAction(
@@ -9,7 +9,7 @@ const initNavState = RootNavigator.router.getStateForAction(
   tempNavState
 )
 
-export const nav = (state = tempNavState, action) => {
+export const nav = (state = initNavState, action) => {
   let nextState
   switch (action.type) {
     default:

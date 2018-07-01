@@ -12,7 +12,8 @@ class RoundButton extends Component {
     const {text, textColor, style, onPress} = this.props
     const color = textColor || colors.LIGHT_BLACK
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
+      activeOpacity={.6}
       onPress={onPress}
       style={[styles.wrapper, style]}>
         <Text style={[styles.wrapperText, {color}]}>{text}</Text>
@@ -32,7 +33,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 70,
     height: 30,
-    borderRadius: 5
+    borderRadius: 5,
+    backgroundColor: colors.WHITE
   },
   wrapperText: {
     fontSize: 14,
