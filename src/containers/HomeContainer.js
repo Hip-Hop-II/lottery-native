@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   ImageBackground,
+  AsyncStorage,
   StyleSheet
 } from 'react-native'
 import {
@@ -45,10 +46,13 @@ class HomeContainer extends Component {
   }
   _loginPress = async (type) => {
     try {
+      this.setState({loading: true})
       if (type === 'guest') {
-        console.log('type guest')
-        const data = await fetch('http://jsonplaceholder.typicode.com/posts')
-        alert(JSON.stringify(data))
+        const data = await User.guest()
+        this.setState({loading: false})
+        if (data && data.token) {
+          AsyncStorage.setItem('@token', data.token)
+        }
       }
     } catch (error) {
       throw error

@@ -4,7 +4,6 @@ import {
 } from 'react-native'
 
 function checkStatus (response) {
-  alert(response)
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
@@ -40,7 +39,6 @@ async function parseParams (params={}) {
 
 export const User = {
   guest (data) {
-    console.log(`${config.API_PATH}/guest`)
     return fetch(`${config.API_PATH}/guest`, {
       method: 'POST',
       headers: {
