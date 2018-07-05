@@ -19,5 +19,5 @@ export default createBottomTabNavigator({
     screen: UserContainer
   }
 }, {
-  initialRouteName: 'Home'
+  initialRouteName: 'User'
 })

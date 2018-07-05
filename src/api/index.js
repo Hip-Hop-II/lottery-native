@@ -42,9 +42,11 @@ export const User = {
     return fetch(`${config.API_PATH}/guest`, {
       method: 'POST',
       headers: {
+        credentials: 'same-origin',
+        credentials: 'include',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({name: 'ccc'})
     })
       .then(checkStatus)
       .then(parseJSON)

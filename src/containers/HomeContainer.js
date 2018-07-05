@@ -16,14 +16,14 @@ import {
   Left,
   Right,
   Body,
-  Button,
-  Spinner
+  Button
 } from 'native-base'
 import colors from '../styles/colors'
 import RoundButton from '../components/buttons/RoundButton'
 import Swiper from 'react-native-swiper'
 import Notice from '../components/Home/Notice'
 import LotteryItem from '../components/Home/LotteryItem'
+import Loading from '../components/loading'
 
 import {User} from '../api'
 
@@ -38,6 +38,9 @@ class HomeContainer extends Component {
   }
   state = {
     loading: false
+  }
+  componentWillUnmount () {
+    this.setState({loading: false})
   }
   _renderList = () => {
     return lotteryList.map((item, index) => (
@@ -59,15 +62,9 @@ class HomeContainer extends Component {
     }
   }
   render() {
-    if (this.state.loading) {
-      return (
-        <Container style={styles.container}>
-          <Spinner />
-        </Container>
-      )
-    }
     return (
       <Container style={styles.container}>
+        {this.state.loading && <Loading />}
         <Header style={styles.header}>
           <Left>
             <ImageBackground style={styles.headerBgImage}

@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import {
   Image,
   Text,
-  ScrollView,
-  StyleSheet
+  FlatList,
+  StyleSheet,
+  RefreshControl
 } from 'react-native'
 import {
   Card,
@@ -13,24 +14,63 @@ import {
 import colors from '../../styles/colors'
 
 class ActivityContainer extends Component {
+  state = {
+    refreshing: false
+  }
+  _renderData = () => {
+    return Array.from({length: 10}).map((item, index) => {
+      return {
+        img: require('../../images/home/banner.jpg'),
+        discription: '图标的制作和上传可以参照官网给出的',
+        date: '2017-06-08'
+      }
+    })
+  }
+  _onRefresh = () => {
+    this.setState({
+      refreshing: true
+    }, () => {
+      setTimeout (() => {
+        this.setState({refreshing: false})
+      }, 2000)
+    })
+  }
+  _onEndReached = () => {
+
+  }
+  _keyExtractor = (item, index) => item + index
+  _renderItem = ({item}) => (
+    <Card>
+      <CardItem cardBody>
+        <Image source={item.img} style={styles.cardImage} />
+      </CardItem>
+      <CardItem bordered>
+        <Body style={styles.cardItemBody}>
+          <Text style={styles.cardItemBodyDiscrption}>{item.discription}</Text>
+          <Text style={styles.cardItemBodyDate}>{item.date}</Text>
+        </Body>
+      </CardItem>
+    </Card>
+  )
   render() {
-    const list = Array.from({length: 10}).map((item, index) => (
-      <Card key={index}>
-        <CardItem cardBody>
-          <Image source={require('../../images/home/banner.jpg')} style={styles.cardImage} />
-        </CardItem>
-        <CardItem bordered>
-          <Body style={styles.cardItemBody}>
-            <Text style={styles.cardItemBodyDiscrption}>图标的制作和上传可以参照官网给出的</Text>
-            <Text style={styles.cardItemBodyDate}>2017-06-08</Text>
-          </Body>
-        </CardItem>
-      </Card>
-    ))
     return (
-      <ScrollView style={styles.wrapper}>
-        {list}
-      </ScrollView>
+      <FlatList
+      data={this._renderData()}
+      keyExtractor={this._keyExtractor}
+      renderItem={this._renderItem}
+      onEndReached={this._onEndReached}
+      refreshControl={
+        <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+            title="刷新中"
+            tintColor="#e33"
+            titleColor="#e33"
+         />
+      }
+      onEndReachedThreshold={150}
+      >
+      </FlatList>
     )
   }
 }
